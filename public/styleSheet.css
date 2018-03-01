@@ -1,0 +1,41 @@
+html,
+    body {
+      color: #fff;
+      font: 600 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+      height: 100%;
+      margin: 0;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-bottom: 50px;
+    }
+
+    .box-set {
+      background: transparent;
+      overflow: auto;
+      justify-content: center;
+      display: flex;
+    }
+
+    .box {
+      background: white;
+      float: center;
+      margin: 2%;
+      padding: 20px 0;
+      text-align: center;
+      width: 15%;
+      color: black;
+    }
+
+    .box:hover {
+      background: grey;
+      cursor: pointer;  
+    }
+
+    .item:hover {
+      background-color: grey;
+      cursor: pointer;
+    }
+
+    .input{
+      color: black;
+    }

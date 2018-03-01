@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rainy Day Movies</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script>
+    window.jQuery || document.write('<script src="/js/jquery-1.12.4.min.js">\x3C/script>')
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+
+</head>
+
+<link rel="stylesheet" type="text/css" href="styleSheet.css">
+<body style="background-image:url(https://img00.deviantart.net/7629/i/2008/213/7/7/flock_wallpaper_pattern_by_hydrogen666.jpg)">
+  <font color="#FFFFFF">
+    <div id="index">
+      <h1 align="middle">
+        My Favorite Movies
+      </h1>
+      <table class="table">
+        <thead>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Genre</th>
+          <th>Options</th>
+        </thead>
+        <span v-show="isSpecific">
+          <b-button class="btn btn-default btn-block" v-on:click="getMovies()">Show All Genres</b-button>
+        </span>
+        <tbody>
+          <td>
+            <input v-model="title" class="input" id="title" type="text" placeholder="Title"></b-form-input>
+          </td>
+          <td>
+            <input v-model="year" class="input" id="year" type="text" placeholder="Year"></b-form-input>
+          </td>
+          <td>
+            <input v-model="genres" class="input" id="input" type="text" placeholder="Genre 1, Genre 2, etc"></b-form-input>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Genres
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li v-for="genre in allGenres">
+                  <a id="item" v-on:click="showGenre(genre)">{{genre}}</a>
+                </li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <b-button class="btn btn-success btn-block" v-on:click="addMovie(genres, year, title)">Add Movie</b-button>
+          </td>
+          <td>
+            <b-button textColor="black" class="btn btn-warning btn-block" v-on:click="editMovies()">Edit Movies</b-button>
+          </td>
+          <tr v-for="movie in movies">
+            <div>
+              <td>
+                <span v-show="isEditing">
+                  <input v-model="movie.title" class="input" v-bind:id="movie.title" type="text" placeholder="Edit Title"></b-form-input>
+                </span>
+                <p>{{movie.title}}</p>
+              </td>
+            </div>
+            <div>
+              <td>
+                <span v-show="isEditing">
+                  <input v-model="movie.year" class="input" v-bind:id="movie.year" type="text" placeholder="Edit Year"></b-form-input>
+                </span>
+                <p>{{movie.year}}</p>
+              </td>
+            </div>
+            <td>
+              <span v-show="isEditing">
+                <input v-model="movie.genres" class="input" id="input" type="text" placeholder="Edit Genre 1, Genre 2, etc"></b-form-input>
+              </span>
+              <div class="dropdown">
+                <button v-bind:id="movie.genres" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Genres
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li v-for="genre in movie.genres">
+                    <a id="item" v-on:click="showGenre(genre)">{{genre}}</a>
+                  </li> 
+                </ul>
+              </div>
+            </td>
+            <td class="updateButton">
+              <span v-show="isEditing">
+                <b-button class="btn btn-warning btn-block" v-on:click="updateMovie(movie.title, movie.year, movie.genres, movie.movieID)">Submit</b-button>
+              </span>
+            </td>
+            <td>
+              <b-button class="btn btn-danger btn-block" v-on:click="deleteMovie(movie.movieID)">Delete</b-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</body>
+<script src="index.js"></script>
+</html>
